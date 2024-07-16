@@ -1,0 +1,14 @@
+{
+  "name": "nature_tour",
+  "version": "1.0.0",
+  "description": "An application that recommends activitis of nature tours",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jiawen Zhang",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
