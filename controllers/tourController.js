@@ -1,16 +1,4 @@
-const fs = require('fs');
-
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
-);
-
-exports.checkID = (req, res, next, val) => {
-  if (req.params.id * 1 > tours.length) {
-    return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
-  }
-
-  next();
-};
+const Tour = require(`../models/tourModel`);
 
 exports.checkBody = (req, res, next) => {
   if (!('name' in req.body && 'price' in req.body)) {
@@ -48,7 +36,7 @@ exports.createTour = (req, res) => {
     JSON.stringify(tours),
     (err) => {
       res.status(201).json({ status: 'success', data: { tour: newTour } });
-    }
+    },
   );
 };
 
