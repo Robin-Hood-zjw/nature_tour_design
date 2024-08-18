@@ -1,6 +1,6 @@
 const Tour = require(`../models/tourModel`);
 
-const APIFeatures = require('./../utils/apiFeatures');
+const APIFeatures = require('../utils/APIFeatures');
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';

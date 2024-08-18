@@ -5,22 +5,22 @@ class APIFeatures {
   }
 
   filter() {
-    // 1A. basic filtering
+    // 1. basic filtering
     const queryObj = { ...this.queryString };
-    const excludeFields = ['page', 'sort', 'limit', 'fields'];
-    excludeFields.forEach((field) => delete queryObj[field]);
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach((field) => delete queryObj[field]);
 
-    // 1B. advanced filtering
+    // 2. advanced filtering
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
-    this.query.find(JSON.parse(queryStr));
+    this.query = this.query.find(JSON.parse(queryStr));
 
     return this;
   }
 
   sort() {
-    if (req.queryString.sort) {
+    if (this.queryString.sort) {
       const sortBy = this.queryString.sort.split(',').join(' ');
       this.query = this.query.sort(sortBy);
     } else {
@@ -52,4 +52,4 @@ class APIFeatures {
   }
 }
 
-module.export = APIFeatures;
+module.exports = APIFeatures;
