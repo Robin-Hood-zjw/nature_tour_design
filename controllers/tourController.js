@@ -29,10 +29,9 @@ exports.getAllTours = async (req, res) => {
   }
 };
 
-exports.getTour = (req, res) => {
+exports.getTour = async (req, res) => {
   try {
-    console.log('Hey\n');
-    const tour = tours.findById(req.params.id);
+    const tour = await tours.findById(req.params.id * 1);
 
     res
       .status(200)

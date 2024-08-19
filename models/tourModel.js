@@ -56,6 +56,11 @@ tourSchema.pre('save', function (next) {
 // all the strings start with "find"
 tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } });
+  this.start = Dat.now();
+  next();
+});
+
+tourSchema.post(/^find/, function (docs, next) {
   next();
 });
 
