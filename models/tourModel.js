@@ -48,21 +48,31 @@ tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
 
+// document middleware which runs before .save() and .create()
 tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
 
+// query middleware
 // all the strings start with "find"
 tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } });
-  this.start = Dat.now();
+  this.start = Date.now();
   next();
 });
 
-tourSchema.post(/^find/, function (docs, next) {
-  next();
-});
+// tourSchema.post(/^find/, function (docs, next) {
+//   console.log(`Query took ${Date.now() - this.start} milliseconds!`);
+//   next();
+// });
+
+// // aggregation middleware
+// tourSchema.pre('aggregate', function (next) {
+//   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+//   console.log(this.pipeline());
+//   next();
+// });
 
 const Tour = mongoose.model('Tour', tourSchema);
 

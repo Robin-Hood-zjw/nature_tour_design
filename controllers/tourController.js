@@ -19,11 +19,9 @@ exports.getAllTours = async (req, res) => {
       .paginate();
     const tours = await features.query;
 
-    res.status(200).json({
-      status: 'success',
-      results: tours.length,
-      data: { tours: tours },
-    });
+    res
+      .status(200)
+      .json({ status: 'success', results: tours.length, data: { tours } });
   } catch (err) {
     res.status(404).json({ status: 'fail', message: err });
   }
@@ -31,11 +29,9 @@ exports.getAllTours = async (req, res) => {
 
 exports.getTour = async (req, res) => {
   try {
-    const tour = await tours.findById(req.params.id * 1);
+    const tour = await Tour.findById(req.params.id);
 
-    res
-      .status(200)
-      .json({ status: 'success', results: tour.length, data: { tour } });
+    res.status(200).json({ status: 'success', data: { tour } });
   } catch (err) {
     res.status(404).json({ status: 'fail', message: err });
   }
@@ -90,7 +86,7 @@ exports.getTourStats = async (req, res) => {
         },
       },
       { $sort: { avgPrice: 1 } },
-      { $match: { _id: { $ne: 'EASY' } } },
+      // { $match: { _id: { $ne: 'EASY' } } },
     ]);
 
     res.status(200).json({ status: 'success', data: { stats } });
