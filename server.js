@@ -22,8 +22,13 @@ app.listen(port, () => {
 });
 
 process.on('unhandledRejection', (err) => {
+  console.log('Unhandled rejection happen.');
   console.log(err.name, err.message);
-  Server.close(() => {
-    process.exit(1);
-  });
+  Server.close(() => process.exit(1));
+});
+
+process.on('uncaughtException', (err) => {
+  console.log('Uncaught exception happen.');
+  console.log(err.name, err.message);
+  Server.close(() => process.exit(1));
 });
