@@ -11,32 +11,24 @@ exports.aliasTopTours = (req, res, next) => {
   next();
 };
 
-exports.getAllTours = async (req, res) => {
-  try {
-    const features = new APIFeatures(Tour.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const tours = await features.query;
+exports.getAllTours = catchASync(async (req, res, next) => {
+  const features = new APIFeatures(Tour.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const tours = await features.query;
 
-    res
-      .status(200)
-      .json({ status: 'success', results: tours.length, data: { tours } });
-  } catch (err) {
-    res.status(404).json({ status: 'fail', message: err });
-  }
-};
+  res
+    .status(200)
+    .json({ status: 'success', results: tours.length, data: { tours } });
+});
 
-exports.getTour = async (req, res) => {
-  try {
-    const tour = await Tour.findById(req.params.id);
+exports.getTour = catchASync(async (req, res, next) => {
+  const tour = await Tour.findById(req.params.id);
 
-    res.status(200).json({ status: 'success', data: { tour } });
-  } catch (err) {
-    res.status(404).json({ status: 'fail', message: err });
-  }
-};
+  res.status(200).json({ status: 'success', data: { tour } });
+});
 
 exports.createTour = catchASync(async (req, res, next) => {
   const newTour = await Tour.create(req.body);
