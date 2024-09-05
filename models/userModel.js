@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Please provide your email.'],
       validate: [validator.isEmail, 'Please provide a valid email.'],
     },
+    photo: String,
     password: {
       type: String,
       minlength: 8,
@@ -29,9 +30,8 @@ const userSchema = new mongoose.Schema(
       },
     },
     passwordChangedAt: Date,
-    photo: String,
   },
-  { toJSON: { virtuals: true }, toObject: { virtuals: true } },
+  // { toJSON: { virtuals: true }, toObject: { virtuals: true } },
 );
 
 userSchema.methods.correctPassword = async function (
