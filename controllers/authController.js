@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 
@@ -5,7 +6,6 @@ const User = require('../models/userModel');
 const sendEmail = require('../utils/email');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-const { stat } = require('fs');
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
