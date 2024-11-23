@@ -3,44 +3,41 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const userSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: [true, 'Please tell us your name.'] },
-    email: {
-      type: String,
-      unique: true,
-      lowercase: true,
-      required: [true, 'Please provide your email.'],
-      validate: [validator.isEmail, 'Please provide a valid email.'],
-    },
-    photo: String,
-    role: {
-      type: String,
-      enum: ['user', 'guide', 'lead-guide', 'admin'],
-      default: 'user',
-    },
-    password: {
-      type: String,
-      minlength: 8,
-      required: [true, 'Please provide a password.'],
-      select: false,
-    },
-    passwordConfirm: {
-      type: String,
-      required: [true, 'Please confirm your password.'],
-      validate: {
-        validator: function (el) {
-          return el === this.password;
-        },
-        message: 'Passwords are not the same.',
-      },
-    },
-    passwordChangedAt: Date,
-    passwordResetToken: String,
-    passwordResetExpires: Date,
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: [true, 'Please tell us your name.'] },
+  email: {
+    type: String,
+    unique: true,
+    lowercase: true,
+    required: [true, 'Please provide your email.'],
+    validate: [validator.isEmail, 'Please provide a valid email.'],
   },
-  // { toJSON: { virtuals: true }, toObject: { virtuals: true } },
-);
+  photo: String,
+  role: {
+    type: String,
+    enum: ['user', 'guide', 'lead-guide', 'admin'],
+    default: 'user',
+  },
+  password: {
+    type: String,
+    minlength: 8,
+    required: [true, 'Please provide a password.'],
+    select: false,
+  },
+  passwordConfirm: {
+    type: String,
+    required: [true, 'Please confirm your password.'],
+    validate: {
+      validator: function (el) {
+        return el === this.password;
+      },
+      message: 'Passwords are not the same.',
+    },
+  },
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
+});
 
 userSchema.methods.correctPassword = async function (
   candidatePassword,
@@ -62,7 +59,7 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   return false;
 };
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', function (next) {
   if (!this.isModified('password') || this.isNew) return next();
 
   this.passwordChangedAt = Date.now() - 1000;
