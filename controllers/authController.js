@@ -7,16 +7,36 @@ const sendEmail = require('../utils/email');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
-const signToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+const signToken = (id) =>
+  jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
-};
 
+// const createSendToken = (user, statusCode, res) => {
+//   const token = signToken(user._id);
+
+//   res.status(statusCode).json({ status: 'success', token, data: { user } });
+// };
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
+    ),
+    httpOnly: true,
+  };
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
-  res.status(statusCode).json({ status: 'success', token, data: { user } });
+  res.cookie('jwt', token, cookieOptions);
+
+  // Remove password from output
+  user.password = undefined;
+
+  res.status(statusCode).json({
+    status: 'success',
+    token,
+    data: { user },
+  });
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
@@ -84,8 +104,10 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.restrictTo = (...roles) => {
-  return (req, res, next) => {
+exports.restrictTo =
+  (...roles) =>
+  (req, res, next) => {
+    // roles ['admin', 'lead-guide']. role='user'
     if (!roles.includes(req.user.role)) {
       return next(
         new AppError('You do not have permission to perform this action', 403),
@@ -94,17 +116,19 @@ exports.restrictTo = (...roles) => {
 
     next();
   };
-};
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
+  // find the target user through the email address
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return next(new AppError('There is no user with email address.', 404));
   }
 
+  // generate a random reset token
   const resetToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
 
+  // build the API of reseting password
   const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
 
   const message = `Forgot your password? Submit a PATCH request with your new password and
