@@ -28,7 +28,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
       ),
     );
   }
-
+  // filter to select the wanted attributes
   const filteredBody = filterObj(req.body, 'name', 'email');
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
@@ -39,7 +39,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
-  await User.findByIdAndUpdate(req.body.id, { active: false });
+  await User.findByIdAndUpdate(req.user.id, { active: false });
 
   res.status(204).json({ status: 'success', data: null });
 });
