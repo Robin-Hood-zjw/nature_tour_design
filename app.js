@@ -1,7 +1,9 @@
 const helmet = require('helmet');
 const morgan = require('morgan');
+const xss = require('xss-clean');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
+const mongoSanitize = require('express-mongo-sanitize');
 
 // eslint-disable-next-line import/newline-after-import
 const AppError = require('./utils/appError');
@@ -28,7 +30,13 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // body parser - read data from body into req.body
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
+
+// data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// data sanitization against XSS attack
+app.use(xss());
 
 // serve static files
 app.use(express.static(`${__dirname}/public`));
