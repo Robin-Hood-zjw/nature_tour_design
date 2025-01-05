@@ -1,3 +1,4 @@
+const helmet = require('helmet');
 const morgan = require('morgan');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
@@ -11,17 +12,28 @@ const globalErrorHandler = require('./controllers/errorController');
 const app = express();
 
 // global middleware
+
+// set security http headers
+app.use(helmet());
+
+// development logging
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
+
+// limit requests from the same API
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
   message: 'Too many request from this IP, please try agian in an hour!',
 });
-
 app.use('/api', limiter);
+
+// body parser - read data from body into req.body
 app.use(express.json());
+
+// serve static files
 app.use(express.static(`${__dirname}/public`));
 
+// test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
