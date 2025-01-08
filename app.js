@@ -1,3 +1,4 @@
+const hpp = require('hpp');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const xss = require('xss-clean');
@@ -7,6 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 
 // eslint-disable-next-line import/newline-after-import
 const AppError = require('./utils/appError');
+
 const tourRouter = require(`./routes/tourRoutes`);
 const userRouter = require(`./routes/userRoutes`);
 const globalErrorHandler = require('./controllers/errorController');
@@ -37,6 +39,20 @@ app.use(mongoSanitize());
 
 // data sanitization against XSS attack
 app.use(xss());
+
+// prevent parameter polluation with a whitelist permit duplicate atrributes in a URL
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsQuantity',
+      'ratingsAverage',
+      'maxGroupSize',
+      'difficulty',
+      'price',
+    ],
+  }),
+);
 
 // serve static files
 app.use(express.static(`${__dirname}/public`));
