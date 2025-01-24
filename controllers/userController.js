@@ -52,17 +52,19 @@ exports.getUser = catchAsync(async (req, res) => {
     .json({ status: 'error', message: 'This route is not yet defined.' });
 });
 
-exports.createUser = (req, res) => {
-  res
-    .status(500)
-    .json({ status: 'error', message: 'This route is not yet defined.' });
-};
+exports.createUser = factory.createOne(User);
+// exports.createUser = (req, res) => {
+//   res
+//     .status(500)
+//     .json({ status: 'error', message: 'This route is not yet defined.' });
+// };
 
-exports.updateUser = (req, res) => {
-  res
-    .status(500)
-    .json({ status: 'error', message: 'This route is not yet defined.' });
-};
+exports.updateUser = factory.updateOne(User);
+// exports.updateUser = (req, res) => {
+//   res
+//     .status(500)
+//     .json({ status: 'error', message: 'This route is not yet defined.' });
+// };
 
 exports.deleteUser = factory.deleteOne(User);
 // exports.deleteUser = (req, res) => {
