@@ -2,6 +2,7 @@ const Tour = require(`../models/tourModel`);
 
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
@@ -59,6 +60,22 @@ exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
   ]);
 
   res.status(200).json({ status: 'success', data: { plan } });
+});
+
+exports.getTourWithin = catchAsync(async (req, res, next) => {
+  const { distance, latlng, unit } = req.params;
+  const [lat, lng] = latlng.split(',');
+
+  if (!lat || !lng) {
+    next(
+      new AppError(
+        'Please provide latitude and longitude in the format of lat,lng.',
+        400,
+      ),
+    );
+  }
+
+  console.log(distance, lat, lng);
 });
 
 exports.getAllTours = factory.getAll(Tour);
