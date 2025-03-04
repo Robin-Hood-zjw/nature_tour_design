@@ -114,7 +114,6 @@ exports.getDistances = catchAsync(async (req, res, next) => {
 
   res.status(200).json({ status: 'success', data: { data: distances } });
 });
-
 exports.getAllTours = factory.getAll(Tour);
 exports.getTour = factory.getOne(Tour, { path: 'reviews' });
 exports.createTour = factory.createOne(Tour);
