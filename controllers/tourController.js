@@ -109,6 +109,7 @@ exports.getDistances = catchAsync(async (req, res, next) => {
         distanceMultiplier: multiplier,
       },
     },
+    { $project: { distance: 1, name: 1 } },
   ]);
 
   res.status(200).json({ status: 'success', data: { data: distances } });
