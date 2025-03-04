@@ -75,7 +75,9 @@ exports.getTourWithin = catchAsync(async (req, res, next) => {
     );
   }
 
-  console.log(distance, lat, lng);
+  console.log(distance, lat, lng, unit);
+
+  res.status(200).json({ status: 'success' });
 });
 
 exports.getAllTours = factory.getAll(Tour);
