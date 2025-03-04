@@ -132,7 +132,7 @@ tourSchema.post(/^find/, function (docs, next) {
   next();
 });
 
-// aggregation middleware
+// aggregation middleware (temp not in use)
 // tourSchema.pre('aggregate', function (next) {
 //   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 //   next();
