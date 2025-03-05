@@ -1,4 +1,5 @@
 const hpp = require('hpp');
+const path = require('path');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const xss = require('xss-clean');
@@ -16,7 +17,13 @@ const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
 
+app.set('view engine', 'pug');
+app.set('view', path.join(__dirname, 'views'));
+
 // global middleware
+
+// serve static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // set security http headers
 app.use(helmet());
@@ -54,9 +61,6 @@ app.use(
     ],
   }),
 );
-
-// serve static files
-app.use(express.static(`${__dirname}/public`));
 
 // test middleware
 app.use((req, res, next) => {
