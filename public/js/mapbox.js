@@ -6,5 +6,23 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoiamlhd2VueiIsImEiOiJjbTlkZGYwZm4wY285MmpvZDVuc
 
 var map = new mapboxgl.Map({
     container:'map',
-    style: 'mapbox://styles/jiawenz/cm9ddum5f009p01spg3wpena4'
+    style: 'mapbox://styles/jiawenz/cm9ddum5f009p01spg3wpena4',
+    // center: [],
+    // zoom: 10,
+    // interactive: false,
+});
+
+const bounds = new mapboxgl.LngLatBounds();
+
+locations.forEach(loc => {
+    // create a marker
+    const el = document.createElement('div');
+    el.className = 'marker';
+
+    new mapboxgl.Marker({ element: el, anchor: 'bottom'})
+        .setLngLat(loc.coordinates)
+        .addTo(map);
+
+    bounds.extend(loc.coordinates);
+    map.fitBounds(bounds, { top:200, bottom:200, left:100, right:100 });
 });
