@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const xss = require('xss-clean');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 
