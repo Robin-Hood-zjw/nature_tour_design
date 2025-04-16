@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const xss = require('xss-clean');
 const express = require('express');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
@@ -42,7 +43,7 @@ app.use('/api', limiter);
 
 // body parser - read data from body into req.body
 app.use(express.json({ limit: '10kb' }));
-app.user(cookieParser());
+app.use(cookieParser());
 
 // data sanitization against NoSQL query injection
 app.use(mongoSanitize());
