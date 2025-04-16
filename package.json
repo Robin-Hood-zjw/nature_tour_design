@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "An application that recommends activitis of nature tours",
   "main": "app.js",
+  "targets": { "main": false },
   "scripts": {
     "start": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
-    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
-    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
+    "watch": "parcel serve ./public/js/index.js --dist-dir ./public/js/bundled",
+    "build": "parcel build ./public/js/index.js --dist-dir ./public/js/bundled"
   },
   "author": "Jiawen Zhang",
   "license": "ISC",
