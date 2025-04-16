@@ -42,6 +42,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.34.4",
     "ndb": "^1.1.5",
+    "parcel": "^2.14.4",
     "prettier": "^3.3.3"
   },
   "engines": {
