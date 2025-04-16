@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 const login = async (email, password) => {
     alert(`${email} / ${password}`);
 
