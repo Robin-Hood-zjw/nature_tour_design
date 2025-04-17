@@ -108,10 +108,9 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
     const currentUser = await User.findById(decoded.id);
 
     // check if the user exists
-    if (!currentUser) return next(new AppError());
+    if (!currentUser) return next();
     // check if the user changes the password after issuing the token
-    if (currentUser.changedPasswordAfter(decoded.iat))
-      return next(new AppError());
+    if (currentUser.changedPasswordAfter(decoded.iat)) return next();
 
     res.locals.user = currentUser;
     return next();

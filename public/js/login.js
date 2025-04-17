@@ -1,8 +1,4 @@
 /* eslint-disable */
-/* eslint-disable no-unused-vars, no-undef */
-
-
-import axios from 'axios';
 
 export const login = async (email, password) => {
     try {
@@ -20,4 +16,4 @@ export const login = async (email, password) => {
     } catch (error) {
         alert(error.response.data.message);
     }
-}
+};
