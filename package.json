@@ -8,8 +8,8 @@
     "start": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
-    "watch": "parcel serve ./public/js/index.js --dist-dir ./public/js/bundled",
-    "build": "parcel build ./public/js/index.js --dist-dir ./public/js/bundled"
+    "watch": "parcel watch ./public/js/index.js --dist-dir ./public/js/bundled --no-hmr",
+    "build": "parcel build ./public/js/index.js --dist-dir ./public/js/bundled --no-hmr"
   },
   "author": "Jiawen Zhang",
   "license": "ISC",
