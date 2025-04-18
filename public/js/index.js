@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 console.log('hello from the parcel');
 
 const login = async (email, password) => {
@@ -39,6 +40,6 @@ if (loginForm) {
     
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        login(email, password);
+        access.login(email, password);
     });
 }
