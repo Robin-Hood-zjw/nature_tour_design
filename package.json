@@ -38,7 +38,8 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
-    "eslint": "^8.57.0",
+    "@eslint/js": "^9.25.0",
+    "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
@@ -46,11 +47,13 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.34.4",
+    "globals": "^16.0.0",
     "ndb": "^1.1.5",
     "parcel": "^2.14.4",
     "prettier": "^3.3.3"
   },
   "engines": {
     "node": ">=10.0.0"
-  }
+  },
+  "type": "module"
 }
