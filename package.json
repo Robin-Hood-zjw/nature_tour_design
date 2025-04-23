@@ -16,7 +16,6 @@
   "author": "Jiawen Zhang",
   "license": "ISC",
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.5",
@@ -48,7 +47,6 @@
     "eslint-plugin-react": "^7.34.4",
     "globals": "^16.0.0",
     "ndb": "^1.1.5",
-    "parcel": "^2.14.4",
     "prettier": "^3.3.3"
   },
   "engines": {
