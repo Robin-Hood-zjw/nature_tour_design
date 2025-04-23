@@ -1,6 +1,5 @@
 /* eslint-disable */
-
-exports.login = async (email, password) => {
+export const login = async (email, password) => {
     try {
         const res = await axios({
             method: 'POST',
@@ -17,7 +16,7 @@ exports.login = async (email, password) => {
     }
 };
 
-exports.logout = async () => {
+export const logout = async () => {
     try {
         const res = await axios({
             method: 'GET',
