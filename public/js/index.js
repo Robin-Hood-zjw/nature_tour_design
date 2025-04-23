@@ -1,13 +1,14 @@
 /* eslint-disable */
-// import '@babel/polyfill';
-
 import { displayMap } from './mapbox.js';
 import { login, logout } from './login.js';
 
+const target = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
 
-const locations = JSON.parse(document.getElementById('map').dataset.locations);
-if (locations) displayMap(locations);
+if (target) {
+    const locations = JSON.parse(target.dataset.locations);
+    displayMap(locations);
+}
 
 if (loginForm) {
     loginForm.addEventListener('submit', e => {
