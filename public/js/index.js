@@ -7,7 +7,7 @@ import { login, logout } from './login.js';
 const loginForm = document.querySelector('.form--login');
 
 const locations = JSON.parse(document.getElementById('map').dataset.locations);
-displayMap(locations);
+if (locations) displayMap(locations);
 
 if (loginForm) {
     loginForm.addEventListener('submit', e => {
