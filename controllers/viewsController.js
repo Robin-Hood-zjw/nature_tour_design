@@ -1,4 +1,5 @@
 const Tour = require('../models/tourModel');
+const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 const policy = "default-src * self blob: data: gap:; style-src * self 'unsafe-inline' blob: data: gap:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' blob: data: gap:; object-src * 'self' blob: data: gap:; img-src * self 'unsafe-inline' blob: data: gap:; connect-src self * 'unsafe-inline' blob: data: gap:; frame-src * self blob: data: gap:;";
@@ -17,6 +18,8 @@ exports.getTour = catchAsync(async (req, res, next) => {
     path: 'reviews',
     fields: 'reviews rating user',
   });
+
+  if (!tour) return next(new AppError('There is no tour with that name.', 404));
 
   res
     .status(200)
