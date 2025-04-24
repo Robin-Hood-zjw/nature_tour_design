@@ -670,6 +670,7 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 var _loginJs = require("./login.js");
 const target = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
+const logoutBtn = document.querySelector('.nav__el--logout');
 if (target) {
     const locations = JSON.parse(target.dataset.locations);
     (0, _mapboxJs.displayMap)(locations);
@@ -680,6 +681,7 @@ if (loginForm) loginForm.addEventListener('submit', (e)=>{
     const password = document.getElementById('password').value;
     (0, _loginJs.login)(email, password);
 });
+if (logoutBtn) logoutBtn.addEventListener('click', (0, _loginJs.logout));
 
 },{"./mapbox.js":"cr3Up","./login.js":"qZEOz"}],"cr3Up":[function(require,module,exports,__globalThis) {
 /* eslint-disable */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -778,11 +780,12 @@ const logout = async ()=>{
         res.data.status = 'success';
         location.reload(true);
     } catch (err) {
-        (0, _alerts.showAlert)('error', err.response.data.message);
+        console.log(err.response);
+        (0, _alerts.showAlert)('error', 'Error logging out! Try again.');
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"5Birt","./alerts":"j4hQk"}],"j4hQk":[function(require,module,exports,__globalThis) {
+},{"./alerts":"j4hQk","@parcel/transformer-js/src/esmodule-helpers.js":"5Birt"}],"j4hQk":[function(require,module,exports,__globalThis) {
 /* eslint-disable */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "hideAlert", ()=>hideAlert);
