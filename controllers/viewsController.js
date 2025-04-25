@@ -30,11 +30,13 @@ exports.getTour = catchAsync(async (req, res, next) => {
 exports.getLoginForm = (req, res) => {
   res
     .status(200)
-    // .set(
-    //   'Content-Security-Policy',
-    //   "connect-src 'self' https://cdnjs.cloudflare.com",
-    // )
     .render('login', {
       title: 'User Login',
     });
+};
+
+exports.getAccount = (req, res) => {
+  res.status(200).render('account', {
+    title: 'Your account'
+  });
 };
