@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const app = require('./app');
-const { Server } = require('http');
 
 dotenv.config({ path: './config.env' });
 
@@ -12,7 +11,7 @@ const DB = process.env.DATABASE.replace(
 
 mongoose
   .connect(DB)
-  .then((con) => {
+  .then(() => {
     console.log('Database connection successful.');
   })
   .catch((err) => console.log('Database connection failure: ', err));
