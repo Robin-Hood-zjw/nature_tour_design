@@ -668,9 +668,11 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"4uyBp":[function(require,module,exports,__globalThis) {
 /* eslint-disable */ var _mapboxJs = require("./mapbox.js");
 var _loginJs = require("./login.js");
+var _updateSettingsJs = require("./updateSettings.js");
 const target = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav__el--logout');
+const userDataForm = document.querySelector('.form-user-data');
 if (target) {
     const locations = JSON.parse(target.dataset.locations);
     (0, _mapboxJs.displayMap)(locations);
@@ -682,8 +684,14 @@ if (loginForm) loginForm.addEventListener('submit', (e)=>{
     (0, _loginJs.login)(email, password);
 });
 if (logoutBtn) logoutBtn.addEventListener('click', (0, _loginJs.logout));
+if (userDataForm) userDataForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    (0, _updateSettingsJs.updateData)(name, email);
+});
 
-},{"./mapbox.js":"cr3Up","./login.js":"qZEOz"}],"cr3Up":[function(require,module,exports,__globalThis) {
+},{"./mapbox.js":"cr3Up","./login.js":"qZEOz","./updateSettings.js":"28JcJ"}],"cr3Up":[function(require,module,exports,__globalThis) {
 /* eslint-disable */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "displayMap", ()=>displayMap);
@@ -800,6 +808,27 @@ const showAlert = (type, msg)=>{
     window.setTimeout(hideAlert, 5000);
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"5Birt"}]},["6cCgj","4uyBp"], "4uyBp", "parcelRequire34c3", {})
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"5Birt"}],"28JcJ":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "updateData", ()=>updateData);
+var _alerts = require("./alerts");
+const updateData = async (name, email)=>{
+    try {
+        const res = await axios({
+            method: 'PATCH',
+            url: 'http://127.0.0.1:3000/api/v1/users/updateMe',
+            data: {
+                name,
+                email
+            }
+        });
+        if (res.data.status === 'success') (0, _alerts.showAlert)('success', 'Data updated successfully.');
+    } catch (err) {
+        (0, _alerts.showAlert)('error', err.response.data.message);
+    }
+};
+
+},{"./alerts":"j4hQk","@parcel/transformer-js/src/esmodule-helpers.js":"5Birt"}]},["6cCgj","4uyBp"], "4uyBp", "parcelRequire34c3", {})
 
 //# sourceMappingURL=index.js.map
