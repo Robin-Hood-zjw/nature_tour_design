@@ -7,6 +7,7 @@ const target = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
+const userPasswordForm = document.querySelector('.form-user-password'); 
 
 if (target) {
     const locations = JSON.parse(target.dataset.locations);
@@ -32,5 +33,16 @@ if (userDataForm) {
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         updateSettings({ name, email }, 'data');
+    });
+}
+
+if (userPasswordForm) {
+    userPasswordForm.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const passwordCurrent = document.getElementById('password-current').value;
+        const password = document.getElementById('password').value;
+        const passwordConfirm = document.getElementById('password-confirm').value;
+        updateSettings({ passwordCurrent, password, passwordConfirm }, 'password');
     });
 }

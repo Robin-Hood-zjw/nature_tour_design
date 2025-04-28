@@ -673,6 +673,7 @@ const target = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
+const userPasswordForm = document.querySelector('.form-user-password');
 if (target) {
     const locations = JSON.parse(target.dataset.locations);
     (0, _mapboxJs.displayMap)(locations);
@@ -692,6 +693,17 @@ if (userDataForm) userDataForm.addEventListener('submit', (e)=>{
         name,
         email
     }, 'data');
+});
+if (userPasswordForm) userPasswordForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const passwordCurrent = document.getElementById('password-current').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password-confirm').value;
+    (0, _updateSettingsJs.updateSettings)({
+        passwordCurrent,
+        password,
+        passwordConfirm
+    }, 'password');
 });
 
 },{"./mapbox.js":"cr3Up","./login.js":"qZEOz","./updateSettings.js":"28JcJ"}],"cr3Up":[function(require,module,exports,__globalThis) {
@@ -826,6 +838,7 @@ const updateSettings = async (data, type)=>{
         });
         if (res.data.status === 'success') (0, _alerts.showAlert)('success', `${type.toUpperCase()} updated successfully.`);
     } catch (err) {
+        console.log(err);
         (0, _alerts.showAlert)('error', err.response.data.message);
     }
 };
