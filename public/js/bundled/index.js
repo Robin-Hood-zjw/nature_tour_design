@@ -694,16 +694,21 @@ if (userDataForm) userDataForm.addEventListener('submit', (e)=>{
         email
     }, 'data');
 });
-if (userPasswordForm) userPasswordForm.addEventListener('submit', (e)=>{
+if (userPasswordForm) userPasswordForm.addEventListener('submit', async (e)=>{
     e.preventDefault();
+    document.querySelector('.btn--save-password').innerHTML = 'Updating...';
     const passwordCurrent = document.getElementById('password-current').value;
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('password-confirm').value;
-    (0, _updateSettingsJs.updateSettings)({
+    await (0, _updateSettingsJs.updateSettings)({
         passwordCurrent,
         password,
         passwordConfirm
     }, 'password');
+    document.querySelector('.btn--save-password').innerHTML = 'Save Password';
+    document.getElementById('password-current').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('password-confirm').value = '';
 });
 
 },{"./mapbox.js":"cr3Up","./login.js":"qZEOz","./updateSettings.js":"28JcJ"}],"cr3Up":[function(require,module,exports,__globalThis) {
@@ -838,7 +843,6 @@ const updateSettings = async (data, type)=>{
         });
         if (res.data.status === 'success') (0, _alerts.showAlert)('success', `${type.toUpperCase()} updated successfully.`);
     } catch (err) {
-        console.log(err);
         (0, _alerts.showAlert)('error', err.response.data.message);
     }
 };

@@ -7,7 +7,7 @@ const target = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
-const userPasswordForm = document.querySelector('.form-user-password'); 
+const userPasswordForm = document.querySelector('.form-user-password');
 
 if (target) {
     const locations = JSON.parse(target.dataset.locations);
@@ -37,12 +37,18 @@ if (userDataForm) {
 }
 
 if (userPasswordForm) {
-    userPasswordForm.addEventListener('submit', e => {
+    userPasswordForm.addEventListener('submit', async e => {
         e.preventDefault();
+        document.querySelector('.btn--save-password').innerHTML = 'Updating...';
 
         const passwordCurrent = document.getElementById('password-current').value;
         const password = document.getElementById('password').value;
         const passwordConfirm = document.getElementById('password-confirm').value;
-        updateSettings({ passwordCurrent, password, passwordConfirm }, 'password');
+        await updateSettings({ passwordCurrent, password, passwordConfirm }, 'password');
+
+        document.querySelector('.btn--save-password').innerHTML = 'Save Password';
+        document.getElementById('password-current').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('password-confirm').value = '';
     });
 }
