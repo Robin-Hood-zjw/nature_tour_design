@@ -688,7 +688,10 @@ if (userDataForm) userDataForm.addEventListener('submit', (e)=>{
     e.preventDefault();
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
-    (0, _updateSettingsJs.updateData)(name, email);
+    (0, _updateSettingsJs.updateSettings)({
+        name,
+        email
+    }, 'data');
 });
 
 },{"./mapbox.js":"cr3Up","./login.js":"qZEOz","./updateSettings.js":"28JcJ"}],"cr3Up":[function(require,module,exports,__globalThis) {
@@ -811,19 +814,17 @@ const showAlert = (type, msg)=>{
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"5Birt"}],"28JcJ":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "updateData", ()=>updateData);
+parcelHelpers.export(exports, "updateSettings", ()=>updateSettings);
 var _alerts = require("./alerts");
-const updateData = async (name, email)=>{
+const updateSettings = async (data, type)=>{
     try {
+        const url = type === 'password' ? 'http://127.0.0.1:3000/api/v1/users/updateMyPassword' : 'http://127.0.0.1:3000/api/v1/users/updateMe';
         const res = await axios({
             method: 'PATCH',
-            url: 'http://127.0.0.1:3000/api/v1/users/updateMe',
-            data: {
-                name,
-                email
-            }
+            url,
+            data
         });
-        if (res.data.status === 'success') (0, _alerts.showAlert)('success', 'Data updated successfully.');
+        if (res.data.status === 'success') (0, _alerts.showAlert)('success', `${type.toUpperCase()} updated successfully.`);
     } catch (err) {
         (0, _alerts.showAlert)('error', err.response.data.message);
     }

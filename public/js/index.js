@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { displayMap } from './mapbox.js';
 import { login, logout } from './login.js';
-import { updateData } from './updateSettings.js';
+import { updateSettings } from './updateSettings.js';
 
 const target = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
@@ -31,6 +31,6 @@ if (userDataForm) {
 
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
-        updateData(name, email);
+        updateSettings({ name, email }, 'data');
     });
 }
