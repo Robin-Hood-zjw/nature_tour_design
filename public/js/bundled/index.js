@@ -689,8 +689,9 @@ if (userDataForm) userDataForm.addEventListener('submit', (e)=>{
     e.preventDefault();
     const form = new FormData();
     form.append('name', document.getElementById('name').value);
-    orm.append('email', document.getElementById('email').value);
+    form.append('email', document.getElementById('email').value);
     form.append('photo', document.getElementById('photo').files[0]);
+    console.log(form);
     (0, _updateSettingsJs.updateSettings)(form, 'data');
 });
 if (userPasswordForm) userPasswordForm.addEventListener('submit', async (e)=>{
@@ -840,7 +841,10 @@ const updateSettings = async (data, type)=>{
             url,
             data
         });
-        if (res.data.status === 'success') (0, _alerts.showAlert)('success', `${type.toUpperCase()} updated successfully.`);
+        if (res.data.status === 'success') {
+            (0, _alerts.showAlert)('success', `${type.toUpperCase()} updated successfully`);
+            window.setTimeout(()=>location.reload(), 1000);
+        }
     } catch (err) {
         (0, _alerts.showAlert)('error', err.response.data.message);
     }
