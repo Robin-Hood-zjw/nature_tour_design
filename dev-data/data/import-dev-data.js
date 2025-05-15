@@ -56,3 +56,15 @@ if (process.argv[2] === '--import') {
 } else if (process.argv[2] === '--delete') {
   deleteData();
 }
+
+// 1. node ./dev-data/data/import-dev-data.js --delete in the terminal
+
+// 2. comment out the following code blocks in the the userModel.js file:
+// -- const bcrypt = require('bcryptjs');
+// -- this.password = await bcrypt.hash(this.password, 12);
+
+// 3. node ./dev-data/data/import-dev-data.js --import in the terminal
+
+// 4. remove comments on the following code blocks in the the userModel.js file:
+// -- const bcrypt = require('bcryptjs');
+// -- this.password = await bcrypt.hash(this.password, 12);
