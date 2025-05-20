@@ -10,6 +10,7 @@ exports.getCheckout = catchAsync(async (req, res, next) => {
     // get the currently booked tous
     const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
     const tour = await Tour.findById(req.params.tourId);
+    console.log(tour);
 
     // create checkout sessions
     const session = await stripe.checkout.sessions.create({
