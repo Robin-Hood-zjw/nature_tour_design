@@ -6,7 +6,7 @@ const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
-exports.getCheckout = catchAsync(async (req, res, next) => {
+exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     // get the currently booked tous
     const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
     const tour = await Tour.findById(req.params.tourId);
@@ -24,7 +24,7 @@ exports.getCheckout = catchAsync(async (req, res, next) => {
             {
                 quantity: 1,
                 price_data: {
-                currency: 'inr',
+                currency: 'usd',
                 unit_amount: tour.price,
                 product_data: {
                     name: `${tour.name} Tour`,
